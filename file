@@ -1,0 +1,34 @@
+import time
+
+# Define the target time as 3:00 PM
+target_time = "15:00:00"
+
+def time_difference(target_time):
+    current_time = time.strftime("%H:%M:%S")
+    time_format = "%H:%M:%S"
+    
+    current_time = time.strptime(current_time, time_format)
+    target_time = time.strptime(target_time, time_format)
+    
+    time_diff = (target_time.tm_hour - current_time.tm_hour) * 3600 + \
+                (target_time.tm_min - current_time.tm_min) * 60 + \
+                (target_time.tm_sec - current_time.tm_sec)
+    
+    if time_diff < 0:
+        # If the target time is earlier than the current time, add 24 hours
+        time_diff += 24 * 3600
+    
+    return time_diff
+
+def execute_code_at_specific_time(target_time):
+    time_diff = time_difference(target_time)
+    
+    if time_diff > 0:
+        print(f"Waiting for {time_diff} seconds until {target_time}")
+        time.sleep(time_diff)
+    
+    # Code to execute after waiting
+    print("Code executed at", time.strftime("%H:%M:%S"))
+
+if __name__ == "__main__":
+    execute_code_at_specific_time(target_time)
